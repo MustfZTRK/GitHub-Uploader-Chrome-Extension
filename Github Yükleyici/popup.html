@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GitHub Uploader</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <img src="icons/icon48.png" alt="GitHub Uploader" class="logo" />
+      <h1>GitHub Uploader</h1>
+      <!-- Dil seçici -->
+      <div class="lang-switcher">
+        <button id="lang-tr" class="lang-btn active" title="Türkçe">TR</button>
+        <button id="lang-en" class="lang-btn" title="English">EN</button>
+      </div>
+      <button id="pin-btn" class="pin-btn" title="Pencereyi sabitle">📌</button>
+    </div>
+
+    <!-- Token Ayarı -->
+    <div id="token-section" class="section">
+      <label for="token" data-i18n="labelToken">GitHub Personal Access Token</label>
+      <div class="token-row">
+        <input type="password" id="token" data-i18n-placeholder="placeholderToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
+        <button id="toggle-token" class="icon-btn" data-i18n-title="titleToggleToken" title="Göster/Gizle">👁</button>
+      </div>
+      <div class="token-hint">
+        <a href="https://github.com/settings/tokens/new" target="_blank" data-i18n="linkCreateToken">Token oluştur →</a>
+        <span class="hint-text" data-i18n="hintRepoScope">(repo yetkisi gerekli)</span>
+      </div>
+      <button id="save-token" class="btn btn-secondary" data-i18n="btnSaveToken">Token Kaydet</button>
+      <div id="token-status" class="status-msg"></div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Proje Bilgileri -->
+    <div id="upload-section" class="section">
+      <label for="repo-name"><span data-i18n="labelRepoName">Proje Adı</span> <span class="required">*</span></label>
+      <input type="text" id="repo-name" data-i18n-placeholder="placeholderRepoName" placeholder="benim-projem" />
+
+      <label for="repo-desc" data-i18n="labelRepoDesc">Kısa Açıklama</label>
+      <input type="text" id="repo-desc" data-i18n-placeholder="placeholderRepoDesc" placeholder="Proje hakkında tek satır açıklama..." />
+
+      <label for="repo-readme">
+        <span data-i18n="labelReadme">Detaylı Açıklama</span>
+        <span class="label-hint" data-i18n="hintReadme">(README.md olarak eklenir)</span>
+      </label>
+      <div class="textarea-wrapper">
+        <textarea id="repo-readme" data-i18n-placeholder="placeholderReadme" rows="5"
+          placeholder="## Proje Hakkında&#10;&#10;Projenizi buraya detaylıca anlatın...&#10;Markdown desteklenir."></textarea>
+        <span id="readme-char-count" class="char-count" data-i18n-dynamic="charCount" data-count="0">0 karakter</span>
+      </div>
+
+      <label data-i18n="labelVisibility">Görünürlük</label>
+      <div class="visibility-row">
+        <label class="radio-card" id="public-card">
+          <input type="radio" name="visibility" value="public" checked />
+          <span class="radio-icon">🌍</span>
+          <span class="radio-label">Public</span>
+        </label>
+        <label class="radio-card" id="private-card">
+          <input type="radio" name="visibility" value="private" />
+          <span class="radio-icon">🔒</span>
+          <span class="radio-label">Private</span>
+        </label>
+      </div>
+
+      <label><span data-i18n="labelFiles">Dosyalar</span> <span class="required">*</span></label>
+      <div class="file-drop-zone" id="drop-zone">
+        <span class="drop-icon">📂</span>
+        <span class="drop-text" data-i18n="dropText">Dosya veya klasörü buraya sürükle</span>
+        <div class="drop-btns">
+          <button class="drop-pick-btn" id="pick-files-btn" data-i18n="btnPickFiles">📄 Dosya Seç</button>
+          <button class="drop-pick-btn" id="pick-folder-btn" data-i18n="btnPickFolder">📁 Klasör Seç</button>
+        </div>
+        <input type="file" id="file-input" multiple hidden />
+        <input type="file" id="folder-input" webkitdirectory multiple hidden />
+      </div>
+      <div id="file-summary" class="file-summary hidden"></div>
+      <div id="file-list" class="file-list"></div>
+
+      <button id="upload-btn" class="btn btn-primary" disabled>
+        <span id="upload-btn-text" data-i18n="btnUpload">⬆ Yükle</span>
+        <span id="upload-spinner" class="spinner hidden"></span>
+      </button>
+
+      <div id="upload-status" class="status-msg"></div>
+      <div id="repo-link" class="repo-link hidden"></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
